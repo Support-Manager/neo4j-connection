@@ -1,2 +1,2 @@
 from .classes import User, Server, Ticket, Response
-from .data_utils import graph
+from py2neo import Graph
