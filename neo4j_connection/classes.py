@@ -16,6 +16,7 @@ class Server(GraphObject):
     sid = Property("id")
     channel = Property()
     prefix = Property()
+    default_confidence = Property()
 
     tickets = RelatedFrom("Ticket", "CREATED_ON")
 
@@ -27,7 +28,7 @@ class Ticket(GraphObject):
     title = Property()
     description = Property()
     priority = Property()
-    type = Property()
+    confidence = Property()
     closed = Property()
 
     created_on = RelatedTo(Server)
