@@ -8,6 +8,8 @@ class User(GraphObject):
 
     tickets = RelatedFrom("Ticket", "CREATED_BY")
     responses = RelatedFrom("Response", "CREATED_BY")
+    closed = RelatedFrom("Ticket", "CLOSED_BY")
+    reopened = RelatedFrom("Ticket", "REOPENED_BY")
 
 
 class Server(GraphObject):
@@ -34,6 +36,9 @@ class Ticket(GraphObject):
 
     created_on = RelatedTo(Server)
     created_by = RelatedTo(User)
+    closed_by = RelatedTo(User)
+    reopened_by = RelatedTo(User)
+
     responses = RelatedFrom("Response", "ATTACHED_TO")
 
     @property
