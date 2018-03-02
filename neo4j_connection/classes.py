@@ -4,7 +4,7 @@ from py2neo.ogm import *
 class User(GraphObject):
     __primarykey__ = "id"
 
-    uid = Property("id")
+    id = Property()
 
     tickets = RelatedFrom("Ticket", "CREATED_BY")
     responses = RelatedFrom("Response", "CREATED_BY")
@@ -12,56 +12,57 @@ class User(GraphObject):
     reopened = RelatedFrom("Ticket", "REOPENED_BY")
 
 
-class Server(GraphObject):
+class Guild(GraphObject):
     __primarykey__ = "id"
 
-    sid = Property("id")
+    id = Property()
     channel = Property()
     support_role = Property()
     prefix = Property()
     default_scope = Property()
 
-    tickets = RelatedFrom("Ticket", "CREATED_ON")
+    tickets = RelatedFrom("Ticket", "LOCATED_ON")
 
 
 class Ticket(GraphObject):
     __primarykey__ = "id"
 
-    tid = Property("id")
+    id = Property()
     title = Property()
     description = Property()
     priority = Property()
     scope = Property()
-    closed = Property()
+    state = Property()
+    updated = Property()
 
-    created_on = RelatedTo(Server)
+    located_on = RelatedTo(Guild)
     created_by = RelatedTo(User)
     closed_by = RelatedTo(User)
     reopened_by = RelatedTo(User)
 
-    responses = RelatedFrom("Response", "ATTACHED_TO")
+    responses = RelatedFrom("Response", "REFERS_TO")
 
     @property
     def author(self):
         return list(self.created_by)[0]
 
     @property
-    def server(self):
-        return list(self.created_on)[0]
+    def guild(self):
+        return list(self.located_on)[0]
 
 
 class Response(GraphObject):
     __primarykey__ = "id"
 
-    rid = Property("id")
+    id = Property()
 
-    created_on = RelatedTo(Server)
+    located_on = RelatedTo(Guild)
     created_by = RelatedTo(User)
-    attached_to = RelatedTo(Ticket)
+    refers_to = RelatedTo(Ticket)
 
     @property
-    def server(self):
-        return list(self.created_on)[0]
+    def guild(self):
+        return list(self.located_on)[0]
 
     @property
     def author(self):
@@ -69,4 +70,4 @@ class Response(GraphObject):
 
     @property
     def ticket(self):
-        return list(self.attached_to)[0]
+        return list(self.refers_to)[0]
