@@ -6,8 +6,8 @@ class User(GraphObject):
 
     id = Property()
 
-    tickets = RelatedFrom("Ticket", "CREATED_BY")
-    responses = RelatedFrom("Response", "CREATED_BY")
+    tickets = RelatedFrom("Ticket", "TICKET_CREATED_BY")
+    responses = RelatedFrom("Response", "RESPONSE_CREATED_BY")
     closed = RelatedFrom("Ticket", "CLOSED_BY")
     reopened = RelatedFrom("Ticket", "REOPENED_BY")
 
@@ -36,7 +36,7 @@ class Ticket(GraphObject):
     updated = Property()
 
     located_on = RelatedTo(Guild)
-    created_by = RelatedTo(User)
+    created_by = RelatedTo(User, "TICKET_CREATED_BY")
     closed_by = RelatedTo(User)
     reopened_by = RelatedTo(User)
 
@@ -57,7 +57,7 @@ class Response(GraphObject):
     id = Property()
 
     located_on = RelatedTo(Guild)
-    created_by = RelatedTo(User)
+    created_by = RelatedTo(User, "RESPONSE_CREATED_BY")
     refers_to = RelatedTo(Ticket)
 
     @property
