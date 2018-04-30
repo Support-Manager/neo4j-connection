@@ -56,6 +56,8 @@ class Response(GraphObject):
 
     id = Property()
 
+    content = Property
+
     located_on = RelatedTo(Guild)
     created_by = RelatedTo(User, "RESPONSE_CREATED_BY")
     refers_to = RelatedTo(Ticket)
