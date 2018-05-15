@@ -20,6 +20,7 @@ class Guild(GraphObject):
     support_role = Property()
     prefix = Property()
     default_scope = Property()
+    language = Property()
 
     tickets = RelatedFrom("Ticket", "LOCATED_ON")
 
