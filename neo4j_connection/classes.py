@@ -11,6 +11,12 @@ class User(GraphObject):
     closed = RelatedFrom("Ticket", "CLOSED_BY")
     reopened = RelatedFrom("Ticket", "REOPENED_BY")
 
+    has_reported = RelatedFrom("User", "REPORTED_BY")
+    reported_by = RelatedTo("User")
+
+    has_warned = RelatedFrom("User", "WARNED_BY")
+    warned_by = RelatedTo("User")
+
 
 class Guild(GraphObject):
     __primarykey__ = "id"
@@ -58,6 +64,7 @@ class Response(GraphObject):
     id = Property()
 
     content = Property()
+    deleted = Property()
 
     located_on = RelatedTo(Guild)
     created_by = RelatedTo(User, "RESPONSE_CREATED_BY")
