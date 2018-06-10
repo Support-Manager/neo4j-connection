@@ -17,6 +17,8 @@ class User(GraphObject):
     has_warned = RelatedFrom("User", "WARNED_BY")
     warned_by = RelatedTo("User")
 
+    deleted_responses = RelatedFrom("Response", "RESPONSE_DELETED_BY")
+
 
 class Guild(GraphObject):
     __primarykey__ = "id"
@@ -68,6 +70,7 @@ class Response(GraphObject):
 
     located_on = RelatedTo(Guild)
     created_by = RelatedTo(User, "RESPONSE_CREATED_BY")
+    deleted_by = RelatedTo(User, "RESPONSE_DELETED_BY")
     refers_to = RelatedTo(Ticket)
 
     @property
