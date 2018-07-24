@@ -1,2 +1,2 @@
-from .classes import User, Guild, Ticket, Response
+from .models import UserMixin, GuildMixin, TicketMixin, ResponseMixin
 from py2neo import Graph

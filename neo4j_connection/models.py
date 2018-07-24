@@ -1,7 +1,7 @@
 from py2neo.ogm import *
 
 
-class User(GraphObject):
+class UserMixin(GraphObject):
     __primarykey__ = "id"
 
     id = Property()
@@ -20,7 +20,7 @@ class User(GraphObject):
     deleted_responses = RelatedFrom("Response", "RESPONSE_DELETED_BY")
 
 
-class Guild(GraphObject):
+class GuildMixin(GraphObject):
     __primarykey__ = "id"
 
     id = Property()
@@ -33,7 +33,7 @@ class Guild(GraphObject):
     tickets = RelatedFrom("Ticket", "LOCATED_ON")
 
 
-class Ticket(GraphObject):
+class TicketMixin(GraphObject):
     __primarykey__ = "id"
 
     id = Property()
@@ -60,7 +60,7 @@ class Ticket(GraphObject):
         return list(self.located_on)[0]
 
 
-class Response(GraphObject):
+class ResponseMixin(GraphObject):
     __primarykey__ = "id"
 
     id = Property()
