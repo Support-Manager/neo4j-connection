@@ -2,6 +2,7 @@ from py2neo.ogm import *
 
 
 class UserMixin(GraphObject):
+    __primarylabel__ = "User"
     __primarykey__ = "id"
 
     id = Property()
@@ -21,6 +22,7 @@ class UserMixin(GraphObject):
 
 
 class GuildMixin(GraphObject):
+    __primarylabel__ = "Guild"
     __primarykey__ = "id"
 
     id = Property()
@@ -34,6 +36,7 @@ class GuildMixin(GraphObject):
 
 
 class TicketMixin(GraphObject):
+    __primarylabel__ = "Ticket"
     __primarykey__ = "id"
 
     id = Property()
@@ -61,6 +64,7 @@ class TicketMixin(GraphObject):
 
 
 class ResponseMixin(GraphObject):
+    __primarylabel__ = "Response"
     __primarykey__ = "id"
 
     id = Property()
