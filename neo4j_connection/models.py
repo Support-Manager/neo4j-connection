@@ -19,6 +19,7 @@ class UserMixin(GraphObject):
     warned_by = RelatedTo("UserMixin")
 
     deleted_responses = RelatedFrom("ResponseMixin", "RESPONSE_DELETED_BY")
+    deleted_tickets = RelatedFrom("TicketMixin", "TICKET_DELETED_BY")
 
 
 class GuildMixin(GraphObject):
@@ -52,6 +53,7 @@ class TicketMixin(GraphObject):
     created_by = RelatedTo(UserMixin, "TICKET_CREATED_BY")
     closed_by = RelatedTo(UserMixin)
     reopened_by = RelatedTo(UserMixin)
+    deleted_by = RelatedTo(UserMixin, "TICKET_DELETED_BY")
 
     responses = RelatedFrom("ResponseMixin", "REFERS_TO")
 
