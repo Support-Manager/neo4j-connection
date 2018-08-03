@@ -9,8 +9,9 @@ class UserMixin(GraphObject):
 
     tickets = RelatedFrom("TicketMixin", "TICKET_CREATED_BY")
     responses = RelatedFrom("ResponseMixin", "RESPONSE_CREATED_BY")
-    closed = RelatedFrom("TicketMixin", "CLOSED_BY")
-    reopened = RelatedFrom("TicketMixin", "REOPENED_BY")
+
+    closed_tickets = RelatedFrom("TicketMixin", "CLOSED_BY")
+    reopened_tickets = RelatedFrom("TicketMixin", "REOPENED_BY")
 
     has_reported = RelatedFrom("UserMixin", "REPORTED_BY")
     reported_by = RelatedTo("UserMixin")
@@ -34,7 +35,8 @@ class GuildMixin(GraphObject):
     language = Property()
     category_channel = Property()
 
-    tickets = RelatedFrom("TicketMixin", "LOCATED_ON")
+    tickets = RelatedFrom("TicketMixin", "TICKET_LOCATED_ON")
+    responses = RelatedFrom("ResponseMixin", "RESPONSE_LOCATED_ON")
 
 
 class TicketMixin(GraphObject):
@@ -49,7 +51,7 @@ class TicketMixin(GraphObject):
     state = Property()
     updated = Property()
 
-    located_on = RelatedTo(GuildMixin)
+    located_on = RelatedTo(GuildMixin, "TICKET_LOCATED_ON")
     created_by = RelatedTo(UserMixin, "TICKET_CREATED_BY")
     closed_by = RelatedTo(UserMixin)
     reopened_by = RelatedTo(UserMixin)
@@ -75,7 +77,7 @@ class ResponseMixin(GraphObject):
     content = Property()
     deleted = Property()
 
-    located_on = RelatedTo(GuildMixin)
+    located_on = RelatedTo(GuildMixin, "RESPONSE_LOCATED_ON")
     created_by = RelatedTo(UserMixin, "RESPONSE_CREATED_BY")
     deleted_by = RelatedTo(UserMixin, "RESPONSE_DELETED_BY")
     refers_to = RelatedTo(TicketMixin)
