@@ -19,6 +19,12 @@ class UserMixin(GraphObject):
     has_warned = RelatedFrom("UserMixin", "WARNED_BY")
     warned_by = RelatedTo("UserMixin")
 
+    has_kicked = RelatedFrom("UserMixin", "KICKED_BY")
+    kicked_by = RelatedTo("UserMixin")
+
+    has_banned = RelatedFrom("UserMixin", "BANNED_BY")
+    banned_by = RelatedTo("UserMixin")
+
     deleted_responses = RelatedFrom("ResponseMixin", "RESPONSE_DELETED_BY")
     deleted_tickets = RelatedFrom("TicketMixin", "TICKET_DELETED_BY")
 
