@@ -39,8 +39,8 @@ class GuildMixin(GraphObject):
     prefix = Property()
     default_scope = Property()
     language = Property()
-    category_channel = Property()
-    voice_channel = Property()
+    ticket_category = Property()
+    voice_category = Property()
 
     tickets = RelatedFrom("TicketMixin", "TICKET_LOCATED_ON")
     responses = RelatedFrom("ResponseMixin", "RESPONSE_LOCATED_ON")
