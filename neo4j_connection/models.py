@@ -49,8 +49,9 @@ class GuildMixin(GraphObject):
 
 class TicketMixin(GraphObject):
     __primarylabel__ = "Ticket"
-    __primarykey__ = "id"
+    __primarykey__ = "uuid"
 
+    uuid = Property()
     id = Property()
     title = Property()
     description = Property()
