@@ -28,6 +28,8 @@ class UserMixin(GraphObject):
     deleted_responses = RelatedFrom("ResponseMixin", "RESPONSE_DELETED_BY")
     deleted_tickets = RelatedFrom("TicketMixin", "TICKET_DELETED_BY")
 
+    joined_guilds = RelatedTo("GuildMixin", "JOINED_GUILD")
+
 
 class GuildMixin(GraphObject):
     __primarylabel__ = "Guild"
@@ -45,6 +47,8 @@ class GuildMixin(GraphObject):
 
     tickets = RelatedFrom("TicketMixin", "TICKET_LOCATED_ON")
     responses = RelatedFrom("ResponseMixin", "RESPONSE_LOCATED_ON")
+
+    joined_users = RelatedFrom(UserMixin, "JOINED_GUILD")
 
 
 class TicketMixin(GraphObject):
