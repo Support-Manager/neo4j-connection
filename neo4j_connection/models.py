@@ -83,8 +83,9 @@ class TicketMixin(GraphObject):
 
 class ResponseMixin(GraphObject):
     __primarylabel__ = "Response"
-    __primarykey__ = "id"
+    __primarykey__ = "uuid"
 
+    uuid = Property()
     id = Property()
 
     content = Property()
