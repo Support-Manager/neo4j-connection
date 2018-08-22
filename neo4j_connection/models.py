@@ -90,6 +90,7 @@ class ResponseMixin(GraphObject):
 
     content = Property()
     deleted = Property()
+    updated = Property()
 
     located_on = RelatedTo(GuildMixin, "RESPONSE_LOCATED_ON")
     created_by = RelatedTo(UserMixin, "RESPONSE_CREATED_BY")
