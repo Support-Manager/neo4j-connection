@@ -25,6 +25,9 @@ class UserMixin(GraphObject):
     has_banned = RelatedFrom("UserMixin", "BANNED_BY")
     banned_by = RelatedTo("UserMixin")
 
+    has_blacklisted = RelatedFrom("UserMixin", "BLACKLISTED_BY")
+    blacklisted_by = RelatedTo("UserMixin")
+
     deleted_responses = RelatedFrom("ResponseMixin", "RESPONSE_DELETED_BY")
     deleted_tickets = RelatedFrom("TicketMixin", "TICKET_DELETED_BY")
 
