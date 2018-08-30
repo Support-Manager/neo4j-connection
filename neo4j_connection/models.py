@@ -16,14 +16,14 @@ class UserMixin(GraphObject):
     has_reported = RelatedFrom("UserMixin", "REPORTED_BY")
     reported_by = RelatedTo("UserMixin")
 
-    has_warned = RelatedFrom("UserMixin", "WARNED_BY")
-    warned_by = RelatedTo("UserMixin")
+    executed_warnings = RelatedFrom("WarningMixin", "WARNING_EXECUTED_BY")
+    warnings = RelatedFrom("WarningMixin", "WARNING_APPLIES_TO")
 
-    has_kicked = RelatedFrom("UserMixin", "KICKED_BY")
-    kicked_by = RelatedTo("UserMixin")
+    executed_kicks = RelatedFrom("KickMixin", "KICK_EXECUTED_BY")
+    kicks = RelatedFrom("KickMixin", "KICK_APPLIES_TO")
 
-    has_banned = RelatedFrom("UserMixin", "BANNED_BY")
-    banned_by = RelatedTo("UserMixin")
+    executed_bans = RelatedFrom("BanMixin", "BAN_EXECUTED_BY")
+    bans = RelatedFrom("BanMixin", "BAN_APPLIES_TO")
 
     has_blacklisted = RelatedFrom("UserMixin", "BLACKLISTED_BY")
     blacklisted_by = RelatedTo("UserMixin")
@@ -52,6 +52,10 @@ class GuildMixin(GraphObject):
     responses = RelatedFrom("ResponseMixin", "RESPONSE_LOCATED_ON")
 
     joined_users = RelatedFrom(UserMixin, "JOINED_GUILD")
+
+    warnings = RelatedFrom("WarningMixin", "WARNING_EXECUTED_ON")
+    kicks = RelatedFrom("KickMixin", "KICK_EXECUTED_ON")
+    bans = RelatedFrom("BanMixin", "BAN_EXECUTED_ON")
 
 
 class TicketMixin(GraphObject):
@@ -111,3 +115,55 @@ class ResponseMixin(GraphObject):
     @property
     def ticket(self):
         return list(self.refers_to)[0]
+
+
+class OutlawMixin(GraphObject):
+    """ Base class for different outlaw types. """
+
+    __primarykey__ = "uuid"
+
+    uuid = Property()
+    utc = Property()
+    reason = Property()
+
+    executed_by = RelatedTo(UserMixin)
+    executed_on = RelatedTo(GuildMixin)
+    applies_to = RelatedTo(UserMixin)
+
+    @property
+    def author(self):
+        return list(self.executed_by)[0]
+
+    @property
+    def guild(self):
+        return list(self.executed_on)[0]
+
+    @property
+    def affected_user(self):
+        return list(self.applies_to)[0]
+
+
+class WarningMixin(OutlawMixin):
+    __primarylabel__ = "Warning"
+
+    executed_by = RelatedTo(UserMixin, "WARNING_EXECUTED_BY")
+    executed_on = RelatedTo(GuildMixin, "WARNING_EXECUTED_ON")
+    applies_to = RelatedTo(UserMixin, "WARNING_APPLIES_TO")
+
+
+class KickMixin(OutlawMixin):
+    __primarylabel__ = "Kick"
+
+    executed_by = RelatedTo(UserMixin, "KICK_EXECUTED_BY")
+    executed_on = RelatedTo(GuildMixin, "KICK_EXECUTED_ON")
+    applies_to = RelatedTo(UserMixin, "KICK_APPLIES_TO")
+
+
+class BanMixin(OutlawMixin):
+    __primarylabel__ = "Ban"
+
+    days = Property()
+
+    executed_by = RelatedTo(UserMixin, "BAN_EXECUTED_BY")
+    executed_on = RelatedTo(GuildMixin, "BAN_EXECUTED_ON")
+    applies_to = RelatedTo(UserMixin, "BAN_APPLIES_TO")
