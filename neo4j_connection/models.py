@@ -25,8 +25,7 @@ class UserMixin(GraphObject):
     executed_bans = RelatedFrom("BanMixin", "BAN_EXECUTED_BY")
     bans = RelatedFrom("BanMixin", "BAN_APPLIES_TO")
 
-    has_blacklisted = RelatedFrom("UserMixin", "BLACKLISTED_BY")
-    blacklisted_by = RelatedTo("UserMixin")
+    blacklisted_on = RelatedTo("GuildMixin")
 
     deleted_responses = RelatedFrom("ResponseMixin", "RESPONSE_DELETED_BY")
     deleted_tickets = RelatedFrom("TicketMixin", "TICKET_DELETED_BY")
@@ -56,6 +55,8 @@ class GuildMixin(GraphObject):
     warnings = RelatedFrom("WarningMixin", "WARNING_EXECUTED_ON")
     kicks = RelatedFrom("KickMixin", "KICK_EXECUTED_ON")
     bans = RelatedFrom("BanMixin", "BAN_EXECUTED_ON")
+
+    blacklist = RelatedFrom(UserMixin, "BLACKLISTED_ON")
 
 
 class TicketMixin(GraphObject):
