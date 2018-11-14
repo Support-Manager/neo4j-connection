@@ -22,6 +22,8 @@ class TicketMixin(GraphObject):
     reopened_by = RelatedTo(UserMixin)
     deleted_by = RelatedTo(UserMixin, "TICKET_DELETED_BY")
 
+    assigned_to = RelatedTo(UserMixin)
+
     responses = RelatedFrom("ResponseMixin", "REFERS_TO")
 
     @property

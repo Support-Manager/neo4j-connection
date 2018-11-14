@@ -31,3 +31,5 @@ class UserMixin(GraphObject):
     deleted_tickets = RelatedFrom("TicketMixin", "TICKET_DELETED_BY")
 
     joined_guilds = RelatedTo("GuildMixin", "JOINED_GUILD")
+
+    assigned_tickets = RelatedFrom("TicketMixin", "ASSIGNED_TO")
