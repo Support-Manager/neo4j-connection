@@ -49,6 +49,7 @@ class GuildMixin(GraphObject):
     ticket_category = Property()
     voice_category = Property()
     log_channel = Property()
+    auto_assigning = Property()
 
     tickets = RelatedFrom("TicketMixin", "TICKET_LOCATED_ON")
     responses = RelatedFrom("ResponseMixin", "RESPONSE_LOCATED_ON")
