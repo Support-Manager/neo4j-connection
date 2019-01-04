@@ -14,8 +14,8 @@ class UserMixin(GraphObject):
     closed_tickets = RelatedFrom("TicketMixin", "CLOSED_BY")
     reopened_tickets = RelatedFrom("TicketMixin", "REOPENED_BY")
 
-    has_reported = RelatedFrom("UserMixin", "REPORTED_BY")
-    reported_by = RelatedTo("UserMixin")
+    issued_reports = RelatedFrom("ReportMixin", "REPORT_ISSUED_BY")
+    reports = RelatedFrom("ReportMixin", "REPORT_APPLIES_TO")
 
     executed_warnings = RelatedFrom("WarningMixin", "WARNING_EXECUTED_BY")
     warnings = RelatedFrom("WarningMixin", "WARNING_APPLIES_TO")
@@ -61,6 +61,8 @@ class GuildMixin(GraphObject):
     bans = RelatedFrom("BanMixin", "BAN_EXECUTED_ON")
 
     blacklist = RelatedFrom(UserMixin, "BLACKLISTED_ON")
+
+    reports = RelatedFrom("ReportMixin", "REPORT_ISSUED_ON")
 
 
 class TicketMixin(GraphObject):
@@ -148,3 +150,28 @@ class BanMixin(OutlawMixin):
     executed_by = RelatedTo(UserMixin, "BAN_EXECUTED_BY")
     executed_on = RelatedTo(GuildMixin, "BAN_EXECUTED_ON")
     applies_to = RelatedTo(UserMixin, "BAN_APPLIES_TO")
+
+
+class ReportMixin(GraphObject):
+    __primarylabel__ = "Report"
+    __primarykey__ = "uuid"
+
+    uuid = Property()
+    utc = Property()
+    reason = Property()
+
+    issued_by = RelatedTo("UserMixin", "REPORT_ISSUED_BY")
+    issued_on = RelatedTo("GuildMixin", "REPORT_ISSUED_ON")
+    applies_to = RelatedTo("UserMixin", "REPORT_APPLIES_TO")
+
+    @property
+    def author(self):
+        return list(self.issued_by)[0]
+
+    @property
+    def guild(self):
+        return list(self.issued_on)[0]
+
+    @property
+    def affected_user(self):
+        return list(self.applies_to)[0]
