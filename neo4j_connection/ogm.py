@@ -1,5 +1,13 @@
-from py2neo.ogm import GraphObject, Property, RelatedTo, RelatedFrom
+from py2neo.ogm import GraphObject as _GraphObject, Property, RelatedTo, RelatedFrom
 from .abc import OutlawMixin
+
+
+class GraphObject(_GraphObject):
+    def __eq__(self, other):
+        return super().__eq__(other) or (
+                issubclass(other.__class__, self.__class__) and
+                getattr(other, 'uuid', other.id) == getattr(self, 'uuid', self.id)
+        )
 
 
 class UserMixin(GraphObject):
