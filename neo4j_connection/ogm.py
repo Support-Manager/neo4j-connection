@@ -18,6 +18,8 @@ class UserMixin(GraphObject):
 
     id = Property()
 
+    prime = Property()
+
     tickets = RelatedFrom("TicketMixin", "TICKET_CREATED_BY")
     responses = RelatedFrom("ResponseMixin", "RESPONSE_CREATED_BY")
 
